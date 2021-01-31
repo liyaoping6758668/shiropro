@@ -24,7 +24,8 @@ public class MyRealm extends AuthorizingRealm {
         String username = (String) authenticationToken.getPrincipal();
         /**
          *
-         *  看底层源码可知，1.如果用户名不正确返回空，自动判断返回相应异常，不会再去校验密码
+         *  看底层源码可知，
+         *  1.如果用户名不正确返回空，自动判断返回相应异常，不会再去校验密码
          *  2.如果用户名正确，封装AuthenticationInfo实现类，返回底层源码会根据该对象校验密码是否正确，如果不正确返回相应异常，否则返回空
          */
 
