@@ -24,7 +24,10 @@ public class shiroDemo {
         //设置密码匹配规则,看源码
         MyMd5Realm myMd5Realm=new MyMd5Realm();
         HashedCredentialsMatcher hashedCredentialsMatcher=new HashedCredentialsMatcher();
+        //算法
         hashedCredentialsMatcher.setHashAlgorithmName("md5");
+        //散列
+        hashedCredentialsMatcher.setHashIterations(1024);
         myMd5Realm.setCredentialsMatcher(hashedCredentialsMatcher);//默认是明文匹配，这里要设置md5密文匹配
         securityManager.setRealm(myMd5Realm);//自定义realm重写认证和授权方法，底层会自动验证调用该方法
         SecurityUtils.setSecurityManager(securityManager);

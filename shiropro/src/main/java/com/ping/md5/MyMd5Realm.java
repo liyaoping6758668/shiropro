@@ -7,6 +7,7 @@ import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 
 /**
  * @author liyaoping
@@ -32,8 +33,14 @@ public class MyMd5Realm extends AuthorizingRealm {
 
         if("lyp".equals(username)){
             //封装数据库用户名和密码
-            SimpleAuthenticationInfo simpleAuthenticationInfo=new SimpleAuthenticationInfo("lyp","202cb962ac59075b964b07152d234b70",this.getName());
+              //md5加密校验
+//            SimpleAuthenticationInfo simpleAuthenticationInfo=new SimpleAuthenticationInfo("lyp","202cb962ac59075b964b07152d234b70",this.getName());
+              //md5+盐
+//            SimpleAuthenticationInfo simpleAuthenticationInfo=new SimpleAuthenticationInfo("lyp","bbf2dead374654cbb32a917afd236656", ByteSource.Util.bytes("ABC"),this.getName());
+              //md5+盐+哈希散列
+            SimpleAuthenticationInfo simpleAuthenticationInfo=new SimpleAuthenticationInfo("lyp","7b7bfd63e6f4c082e099dc3c7f3d56c1", ByteSource.Util.bytes("ABC"),this.getName());
             return simpleAuthenticationInfo;
+
         }
         return null;
     }
