@@ -2,6 +2,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.config.IniSecurityManagerFactory;
 import org.apache.shiro.mgt.DefaultSecurityManager;
+import org.apache.shiro.realm.Realm;
 import org.apache.shiro.realm.text.IniRealm;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.Factory;
@@ -20,11 +21,12 @@ public class shiroDemo {
         /*Factory<SecurityManager> factory = new IniSecurityManagerFactory("classpath:shiro.ini");
         SecurityManager securityManager = factory.getInstance();*/
         DefaultSecurityManager securityManager = new DefaultSecurityManager();
-        securityManager.setRealm(new IniRealm("classpath:shiro.ini"));
+//        securityManager.setRealm(new IniRealm("classpath:shiro.ini"));
+        securityManager.setRealm(new MyRealm());//自定义realm重写认证和授权方法，底层会自动验证调用该方法
         SecurityUtils.setSecurityManager(securityManager);
 
         Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken token=new UsernamePasswordToken("lyp","111");
+        UsernamePasswordToken token=new UsernamePasswordToken("lyp123","111");
         try {
             subject.login(token);
         } catch (UnknownAccountException uae) {
@@ -40,5 +42,6 @@ public class shiroDemo {
                 System.out.println("6666");
             //unexpected condition?  error?
         }
+
     }
 }
