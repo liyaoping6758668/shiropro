@@ -6,6 +6,8 @@ import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.subject.Subject;
 
+import java.util.Arrays;
+
 /**
  * @author liyaoping
  * @version 1.0
@@ -49,6 +51,28 @@ public class shiroDemo {
             catch (AuthenticationException ae) {
                 System.out.println("6666");
             //unexpected condition?  error?
+        }
+
+        //下面授权，以上是认证，授权基础必须通过认证才能授权
+        if(subject.isAuthenticated()){
+
+            //判断单一角色
+            System.out.println(subject.hasRole("admin"));
+
+            //是否全部包含才返回true
+            System.out.println(subject.hasAllRoles(Arrays.asList("admin","user")));
+
+            //判断角色中是否包含
+            boolean result[] =subject.hasRoles(Arrays.asList("admin","super"));
+            for (int i=0;i<result.length;i++){
+                System.out.println(result[i]);
+            }
+
+            System.out.println("*********************");
+            //以上基于角色判断，下面是基于权限判断
+            System.out.println(subject.isPermitted("user:create:01"));
+            System.out.println(subject.isPermitted("user:*:*"));
+
         }
 
     }

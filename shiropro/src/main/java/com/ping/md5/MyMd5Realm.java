@@ -5,6 +5,7 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
@@ -17,7 +18,15 @@ import org.apache.shiro.util.ByteSource;
 public class MyMd5Realm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        return null;
+        String username= (String) principalCollection.getPrimaryPrincipal();//用户名
+        System.out.println("============"+username);
+        //和认证类似,模仿查询该用户数据库存储的角色
+        SimpleAuthorizationInfo simpleAuthorizationInfo=new SimpleAuthorizationInfo();
+        simpleAuthorizationInfo.addRole("admin");
+        simpleAuthorizationInfo.addRole("user");
+        //资源标识符，操作，资源实例标识符
+        simpleAuthorizationInfo.addStringPermission("user:*:01");
+        return simpleAuthorizationInfo;
     }
 
     //认证
